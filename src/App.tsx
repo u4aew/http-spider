@@ -1,19 +1,17 @@
-import { PagePopUp } from './pages/PopUp';
-import { PageSchema } from './pages/Schema';
-import { HashRouter as Router, Routes, Route } from 'react-router-dom';
-
+import { RoutesMain } from './routes';
 import './App.css';
+import { I18nextProvider } from 'react-i18next';
+import { Provider } from 'react-redux';
+import { store } from './store';
+import i18n from './i18n';
 
 function App() {
   return (
-    <Router>
-      <div>
-        <Routes>
-          <Route path="/" element={<PagePopUp />} />
-          <Route path="/schema" element={<PageSchema />} />
-        </Routes>
-      </div>
-    </Router>
+    <Provider store={store}>
+      <I18nextProvider i18n={i18n}>
+        <RoutesMain />
+      </I18nextProvider>
+    </Provider>
   );
 }
 
