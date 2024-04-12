@@ -21,7 +21,7 @@ export const ButtonControl: React.FC<ButtonControlProps> = ({
 }) => {
   return (
     <div>
-      <Row gutter={16} justify="center" style={{ marginTop: 24 }}>
+      <Row gutter={16} justify="center" style={{ marginTop: 12 }}>
         <Col>
           <Button
             type="primary"

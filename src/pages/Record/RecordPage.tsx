@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ButtonControl } from '../../components/ButtonControl';
-import styles from './PagePopUp.module.scss';
+import { stopRecordHttp, startRecordHttp } from '../../utils';
+import styles from './RecordPage.module.scss';
 
-export const PagePopUp = () => {
+export const RecordPage = () => {
   const [recording, setRecording] = useState(false);
   const [paused, setPaused] = useState(false);
   const [secondsElapsed, setSecondsElapsed] = useState(0);
@@ -27,11 +28,13 @@ export const PagePopUp = () => {
   const onStartRecord = () => {
     setRecording(true);
     setPaused(false);
+    startRecordHttp();
   };
 
   const onStopRecord = () => {
     setRecording(false);
     setPaused(false);
+    stopRecordHttp();
   };
 
   const onPauseRecord = () => {
@@ -41,7 +44,7 @@ export const PagePopUp = () => {
   };
 
   return (
-    <div>
+    <div className={styles.box}>
       <div className={styles.title}>{t('title')}</div>
       <ButtonControl
         onStart={onStartRecord}

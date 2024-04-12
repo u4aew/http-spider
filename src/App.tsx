@@ -1,5 +1,4 @@
 import { RoutesMain } from './routes';
-import './App.css';
 import { I18nextProvider } from 'react-i18next';
 import { Provider } from 'react-redux';
 import { store } from './store';
