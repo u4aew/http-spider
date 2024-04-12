@@ -22,20 +22,24 @@ export const PageSchema = () => {
 
   const columns = [
     {
-      title: 'Type',
-      dataIndex: 'type',
-      key: 'type',
-    },
-    {
       title: 'URL',
       dataIndex: 'url',
       key: 'url',
     },
     {
-      title: 'Response',
-      dataIndex: 'responseBody',
-      key: 'responseBody',
-      render: (text: never) => <pre>{JSON.stringify(text, null, 2)}</pre>,
+      title: 'Method',
+      dataIndex: 'method',
+      key: 'method',
+    },
+    {
+      title: 'Status',
+      dataIndex: 'status',
+      key: 'status',
+    },
+    {
+      title: 'Time',
+      dataIndex: 'time',
+      key: 'time',
     },
   ];
 
