@@ -1,1 +1,1 @@
-export { PagePopUp } from './PagePopUp.tsx'
+export { PagePopUp } from './PagePopUp.tsx';

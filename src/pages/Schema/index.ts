@@ -1,1 +1,1 @@
-export { PageSchema } from './PageSchema.tsx'
+export { PageSchema } from './PageSchema.tsx';

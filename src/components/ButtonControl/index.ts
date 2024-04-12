@@ -1,1 +1,1 @@
-export { ButtonControl } from './ButtonControl'
+export { ButtonControl } from './ButtonControl';

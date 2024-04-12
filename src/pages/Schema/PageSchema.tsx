@@ -1,3 +1,3 @@
 export const PageSchema = () => {
-    return <div>schema</div>
-}
+  return <div>schema</div>;
+};
