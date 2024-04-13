@@ -3,6 +3,11 @@ function sendMessageToBackground(message) {
   window.dispatchEvent(event);
 }
 
+function getDateTime() {
+  const date = new Date();
+  return `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
+}
+
 const originalXhrOpen = XMLHttpRequest.prototype.open;
 const originalXhrSend = XMLHttpRequest.prototype.send;
 const originalFetch = window.fetch;
@@ -16,12 +21,11 @@ XMLHttpRequest.prototype.send = function (body) {
   const startTime = Date.now();
   this.addEventListener('load', function () {
     const duration = Date.now() - startTime;
-    console.log(this.method, 'this.method');
     sendMessageToBackground({
       type: 'XHR',
-      method: this.method,
+      method: this.method ? this.method : 'GET',
       url: this._url,
-      time: new Date(),
+      dateTime: getDateTime(),
       requestBody: body,
       responseBody: this.responseText,
       status: this.status,
@@ -53,7 +57,7 @@ window.fetch = async (...args) => {
       url: response.url,
       requestBody: args[1] && args[1].body ? args[1].body : null,
       responseBody: body,
-      time: new Date(),
+      dateTime: getDateTime(),
       status: response.status,
       statusText: response.statusText,
       responseHeaders: JSON.stringify([...response.headers]),
