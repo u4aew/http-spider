@@ -1,3 +1,6 @@
+import { Button } from 'antd';
+import { EyeOutlined } from '@ant-design/icons';
+
 export const getColumns = () => {
   return [
     {
@@ -19,6 +22,16 @@ export const getColumns = () => {
       title: 'Date',
       dataIndex: 'dateTime',
       key: 'dateTime',
+    },
+    {
+      title: '',
+      dataIndex: 'action',
+      key: 'action',
+      render: () => {
+        return (
+          <Button onClick={() => {}} type="primary" icon={<EyeOutlined />} />
+        );
+      },
     },
   ];
 };

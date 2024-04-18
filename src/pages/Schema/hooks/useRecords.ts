@@ -6,18 +6,12 @@ export function useRecords() {
   useEffect(() => {
     chrome.storage.local.get(KEY_STORAGE, function (result) {
       if (result.records) {
-        const parsedRecords = result.records.map(
-          (record: { responseBody: string }) => ({
-            ...record,
-            responseBody: JSON.parse(record.responseBody),
-          }),
-        );
-        setRecords(parsedRecords);
+        console.log(JSON.stringify(result.records));
+        setRecords(result.records);
       } else {
         console.log('No records found');
       }
     });
   }, []);
-
   return { records, setRecords };
 }
