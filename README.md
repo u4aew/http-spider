@@ -1,7 +1,7 @@
 # HTTP Spider
 ![Plugin Interface](img/logo.png)
 ## Description
-This project is a Chrome plugin that serves as a tool for creating HTTP mocks for Mocker API. It records HTTP requests made by the user and exports them into mock.js format for easy integration with Mocker API.
+This project is a Chrome plugin that serves as a tool for creating HTTP mocks for Mocker API. It records HTTP requests made by the user and exports them into mock.js format for easy integration with [Mocker API](https://github.com/jaywcjlove/mocker-api).
 
 ## Installation
 To install the plugin, follow these steps:
