@@ -13,6 +13,7 @@ const originalXhrSend = XMLHttpRequest.prototype.send;
 const originalFetch = window.fetch;
 
 XMLHttpRequest.prototype.open = function (method, url) {
+  this._method = method;
   this._url = url;
   return originalXhrOpen.apply(this, arguments);
 };
@@ -21,9 +22,10 @@ XMLHttpRequest.prototype.send = function (body) {
   const startTime = Date.now();
   this.addEventListener('load', function () {
     const duration = Date.now() - startTime;
+    console.log(JSON.stringify(this), '');
     sendMessageToBackground({
       type: 'XHR',
-      method: this.method ? this.method : 'GET',
+      method: this._method,
       url: this._url,
       dateTime: getDateTime(),
       requestBody: body,
@@ -48,8 +50,6 @@ window.fetch = async (...args) => {
     const clone = response.clone();
     const body = await clone.text();
     const size = new Blob([body]).size;
-
-    console.log('Fetch to:', response.url, 'response:', body);
 
     sendMessageToBackground({
       type: 'XHR',

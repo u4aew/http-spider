@@ -1,3 +1,12 @@
 {
-  "title": "Http tracker"
+  "title": "Http tracker",
+  "schema": {
+    "actions": {
+      "download": "Download",
+      "settings": "Settings"
+    },
+    "details": {
+      "title": "Record Details"
+    }
+  }
 }

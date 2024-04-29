@@ -1,7 +1,10 @@
 import { useState } from 'react';
 import { Table, Drawer, Descriptions, Typography, Button } from 'antd';
+import { useTranslation } from 'react-i18next';
 import { getColumns } from './columns';
 import { useRecords } from './hooks';
+import { downloadMockFile } from '../../utils';
+import styles from './PageSchema.module.scss';
 
 const { Paragraph, Text } = Typography;
 
@@ -22,7 +25,7 @@ interface Record {
 export const PageSchema = () => {
   const { records } = useRecords();
   const columns = getColumns();
-
+  const { t } = useTranslation();
   const [selectedRecord, setSelectedRecord] = useState<Record | null>(null);
 
   const showRecordDetails = (record: Record) => {
@@ -33,51 +36,23 @@ export const PageSchema = () => {
     setSelectedRecord(null);
   };
 
-  const generateMock = (record: { url: string; responseBody: string }) => {
-    try {
-      const parsedBody = JSON.parse(record.responseBody);
-      return `
-      'GET ${record.url}': (req, res) => {
-        res.json(${JSON.stringify(parsedBody, null, 2)});
-      },
-    `;
-    } catch (error) {
-      console.error(`Error parsing JSON for URL ${record.url}:`, error);
-      return `
-      'GET ${record.url}': (req, res) => {
-        res.status(500).json({ error: "Failed to parse response body" });
-      },
-    `;
-    }
-  };
-
-  const downloadMockFile = (
-    records: { url: string; responseBody: string }[],
-  ) => {
-    const uniqueUrls = new Set();
-    const uniqueRecords = records.filter(record => {
-      if (!uniqueUrls.has(record.url)) {
-        uniqueUrls.add(record.url);
-        return true;
-      }
-      return false;
-    });
-
-    const mocks = uniqueRecords.map(record => generateMock(record)).join('\n');
-    const blob = new Blob([mocks], { type: 'text/plain;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'mocks.js';
-    a.click();
-    URL.revokeObjectURL(url);
-  };
   return (
     <div>
-      <Button type="primary" onClick={() => downloadMockFile(records)}>
-        Download Mocks
-      </Button>
       <Table<Record>
+        title={() => (
+          <div className={styles.header}>
+            <div className={styles.main}>
+              <Button type="primary" onClick={() => downloadMockFile(records)}>
+                {t('schema.actions.download')}
+              </Button>
+            </div>
+            <div className={styles.side}>
+              <Button type="dashed" onClick={console.log}>
+                {t('schema.actions.settings')}
+              </Button>
+            </div>
+          </div>
+        )}
         dataSource={records}
         columns={columns}
         rowKey="url"
@@ -86,7 +61,7 @@ export const PageSchema = () => {
         })}
       />
       <Drawer
-        title="Record Details"
+        title={t('schema.details.title')}
         placement="right"
         closable={true}
         onClose={closeDrawer}
