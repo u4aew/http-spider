@@ -1,12 +1,20 @@
 import { Button } from 'antd';
 import { EyeOutlined } from '@ant-design/icons';
 
-export const getColumns = () => {
+type Props = {
+  showRecordDetails: (record: Record<never, never>) => void;
+};
+
+export const getColumns = ({ showRecordDetails }: Props) => {
   return [
     {
       title: 'URL',
       dataIndex: 'url',
       key: 'url',
+      render: (_: never, record: Record<never, never>) => {
+        // @ts-ignore
+        return <div className="record-details">{record?.url}</div>;
+      },
     },
     {
       title: 'Method',
@@ -27,9 +35,16 @@ export const getColumns = () => {
       title: '',
       dataIndex: 'action',
       key: 'action',
-      render: () => {
+      render: (_: never, record: Record<never, never>) => {
         return (
-          <Button onClick={() => {}} type="primary" icon={<EyeOutlined />} />
+          <Button
+            // ts-ignore
+            onClick={() => {
+              showRecordDetails(record);
+            }}
+            type="primary"
+            icon={<EyeOutlined />}
+          />
         );
       },
     },

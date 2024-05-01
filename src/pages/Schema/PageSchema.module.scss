@@ -4,7 +4,15 @@
     flex: 1;
     margin-right: 5px;
   }
-  .side {
+  .side {}
+}
 
+.actions {
+  display: flex;
+  align-content: center;
+  margin-left: -5px;
+  margin-right: -5px;
+  .item {
+    margin: 0 10px;
   }
 }

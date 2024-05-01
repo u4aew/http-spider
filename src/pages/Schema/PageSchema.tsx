@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Table, Drawer, Descriptions, Typography, Button } from 'antd';
+import { Table, Drawer, Descriptions, Typography, Button, Input } from 'antd';
+import { Record } from '../../types';
 import { useTranslation } from 'react-i18next';
 import { getColumns } from './columns';
 import { useRecords } from './hooks';
@@ -8,28 +9,19 @@ import styles from './PageSchema.module.scss';
 
 const { Paragraph, Text } = Typography;
 
-interface Record {
-  url: string;
-  method: string;
-  status: number;
-  statusText: string;
-  dateTime: string;
-  duration: number;
-  responseSize: number;
-  type: string;
-  responseBody: string;
-  requestBody: string;
-  responseHeaders: string;
-}
-
 export const PageSchema = () => {
+  const [domain, setDomain] = useState('');
   const { records } = useRecords();
-  const columns = getColumns();
+  const showRecordDetails = (record: Record) => {
+    setSelectedRecord(record);
+  };
+  // @ts-ignore
+  const columns = getColumns({ showRecordDetails });
   const { t } = useTranslation();
   const [selectedRecord, setSelectedRecord] = useState<Record | null>(null);
 
-  const showRecordDetails = (record: Record) => {
-    setSelectedRecord(record);
+  const onDomainChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setDomain(e.target.value);
   };
 
   const closeDrawer = () => {
@@ -42,23 +34,34 @@ export const PageSchema = () => {
         title={() => (
           <div className={styles.header}>
             <div className={styles.main}>
-              <Button type="primary" onClick={() => downloadMockFile(records)}>
-                {t('schema.actions.download')}
-              </Button>
+              <div className={styles.actions}>
+                <div className={styles.item}>
+                  <Button
+                    type="primary"
+                    onClick={() => downloadMockFile(records, domain)}
+                  >
+                    {t('schema.actions.download')}
+                  </Button>
+                </div>
+                <div className={styles.item}>
+                  <Input
+                    onChange={onDomainChange}
+                    placeholder={t('schema.domain.placeholder')}
+                  ></Input>
+                </div>
+              </div>
             </div>
             <div className={styles.side}>
-              <Button type="dashed" onClick={console.log}>
-                {t('schema.actions.settings')}
+              <Button disabled={true} type="dashed" onClick={console.log}>
+                {t('schema.actions.settings')} (soon)
               </Button>
             </div>
           </div>
         )}
         dataSource={records}
+        //@ts-ignore
         columns={columns}
         rowKey="url"
-        onRow={record => ({
-          onClick: () => showRecordDetails(record),
-        })}
       />
       <Drawer
         title={t('schema.details.title')}

@@ -1,5 +1,5 @@
 {
-  "title": "Http tracker",
+  "title": "HTTP Spider",
   "schema": {
     "actions": {
       "download": "Download",
@@ -7,6 +7,9 @@
     },
     "details": {
       "title": "Record Details"
+    },
+    "domain": {
+      "placeholder": "Enter domain name"
     }
   }
 }
